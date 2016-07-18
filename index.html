@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	
+	<title>Document</title>
+	<style>
+    *{
+    	margin:0;
+    	padding:0;
+    }
+    .main{
+    	width:600px;
+    	height:400px;
+    	overflow: hidden;
+    	
+    }
+    .box{
+    	width:600px;
+    	height:400px;
+    	position:relative;
+    }    
+    p{
+    	 width:150px;
+    }
+    .left{
+    	width:30px;
+    	height:30px;
+    	line-height: 30px;
+    	text-align: center;
+    	float:left;
+    }
+    .cuo{
+    	 width:30px;
+    	 height:30px;
+    	 float:left;
+    	margin-left: 30px;
+    }
+    .right{
+    	width:30px;
+    	height:30px;
+    	line-height: 30px;
+    	text-align: center;
+    	float:right;
+    }
+    .tu{
+    	width:150px;
+    	height:300px;
+    	position: absolute;
+    	top:0px;
+
+    }
+    .tu:nth-of-type(1){
+    	
+        left:0; 
+    }
+    .tu:nth-of-type(2){
+    	
+    	left:150px;
+    }
+    .tu:nth-of-type(3){
+    	
+    	left:300px;
+
+    }
+    .tu:nth-of-type(4){
+    	
+    	left:450px;
+
+    }
+	</style>
+</head>
+<body>
+	<div class="main">
+           <div class="box">
+	       <div class="tu" style="background: red;">
+	      		1
+                <p><button class="left" > < </button><button class="cuo"> X </button><button class="right"> > </button></p>
+	       </div>
+	      
+	       <div class="tu" style=" background:green;">2
+               <p><button class="left"> < </button><button class="cuo"> X </button><button class="right"> > </button></p>
+	       </div>
+	       
+	       <div class="tu" style="background: orange;">3
+	       <p><button class="left"> < </button><button class="cuo"> X </button><button class="right"> > </button></p>
+            </div>
+
+	       <div class="tu" style="background: blue;">4
+	       <p><button class="left"> < </button><button class="cuo"> X </button><button class="right"> > </button></p>
+	       </div>
+       </div>
+       </div>
+	</div>
+</body>
+</html>
+<script src="jquery.js"></script>
+<script>
+        
+var len=$(".tu").length;
+
+   each()
+  function each(){
+  	$(".tu").each(function(){
+  		var idx=$(this).index();
+  		$(this).animate({"left":150*idx},1000)
+  	})
+  } 
+$(".main").on("click",".left",function(){
+
+	var obj=$(this).parents(".tu");
+        idx=obj.index();
+	    left=parseInt($(this).parents(".tu").css("left"));
+	    leftprev=parseInt($(this).parents(".tu").prev().css("left"));
+         
+         $(this).parents(".tu").animate({"left":leftprev},1000);
+         $(this).parents(".tu").prev().animate({"left":left},1000).insertAfter(obj);
+	    if(idx==0){
+                 $(this).parents(".tu").animate({"left":450});
+                 $(".tu").eq(0).insertAfter($(".tu").last())
+                 each();	
+	    }
+	    	
+	    })
+	    
+$(".main").on("click",".right",function(){
+	var obj=$(this).parents(".tu");
+	     idx=obj.index(); 
+	    left=parseInt($(this).parents(".tu").css("left"));
+	    leftnext=parseInt($(this).parents(".tu").next().css("left"));
+
+         $(this).parents(".tu").animate({"left":leftnext},1000);
+         $(this).parents(".tu").next().animate({"left":left},1000).insertBefore(obj);
+	    if(idx==len-1){   
+	    	 $(this).parents(".tu").animate({"left":0});
+                $(this).parents(".tu").insertBefore($(".tu").eq(0))
+                 each();
+	    }
+	    
+	    })
+   $(".main").on("click",".cuo",function(){
+	
+      $(this).parents(".tu").remove();
+      each()
+})  
+
+    
+</script>
